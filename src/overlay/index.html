@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kick Chat Overlay</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="overlay-container">
+            <!-- Barra de título para mover la ventana -->
+            <div class="title-bar">
+                <div class="drag-handle"></div>
+                <div class="controls">
+                    <button id="settings-button" title="Configuración">⚙️</button>
+                    <button id="minimize-button" title="Minimizar">_</button>
+                    <button id="close-button" title="Cerrar">✕</button>
+                </div>
+            </div>
+            
+            <!-- Contenedor de mensajes de chat -->
+            <div id="chat-container">
+                <!-- Los mensajes se añadirán dinámicamente aquí -->
+            </div>
+            
+            <!-- Controles de redimensionamiento -->
+            <div class="resize-handle resize-handle-se"></div>
+        </div>
+    </div>
+    
+    <script src="overlay.js"></script>
+</body>
+</html>

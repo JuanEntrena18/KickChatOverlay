@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Kick Chat Overlay</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="config-container">
+            <header class="config-header">
+                <h1>Configuración de Kick Chat Overlay</h1>
+                <div class="language-selector">
+                    <select id="language-select">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                    </select>
+                </div>
+            </header>
+            
+            <div class="tabs">
+                <button class="tab-button active" data-tab="connection">Conexión</button>
+                <button class="tab-button" data-tab="appearance">Apariencia</button>
+                <button class="tab-button" data-tab="behavior">Comportamiento</button>
+                <button class="tab-button" data-tab="about">Acerca de</button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Pestaña de Conexión -->
+                <div class="tab-pane active" id="connection-tab">
+                    <div class="form-group">
+                        <label for="channel-slug">Canal de Kick.com:</label>
+                        <input type="text" id="channel-slug" placeholder="Nombre del canal (ej: nombre_usuario)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="auth-token">Token de Autenticación (opcional):</label>
+                        <input type="password" id="auth-token" placeholder="Token OAuth para funcionalidades adicionales">
+                        <p class="help-text">Solo necesario para enviar mensajes o acceder a canales privados</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Método de conexión:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="connection-method" value="polling" checked>
+                                Polling (recomendado)
+                            </label>
+                            <label>
+                                <input type="radio" name="connection-method" value="webhook">
+                                Webhook (avanzado)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group webhook-settings" style="display: none;">
+                        <label for="webhook-port">Puerto para Webhook:</label>
+                        <input type="number" id="webhook-port" value="3000" min="1024" max="65535">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="auto-connect">
+                            Conectar automáticamente al iniciar
+                        </label>
+                    </div>
+                    
+                    <div class="connection-status">
+                        <span id="status-indicator" class="status-disconnected"></span>
+                        <span id="status-text">Desconectado</span>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="connect-button" class="primary-button">Conectar</button>
+                        <button id="disconnect-button" class="secondary-button" disabled>Desconectar</button>
+                    </div>
+                </div>
+                
+                <!-- Pestaña de Apariencia -->
+                <div class="tab-pane" id="appearance-tab">
+                    <div class="form-group">
+                        <label for="opacity-slider">Transparencia del fondo:</label>
+                        <div class="slider-container">
+                            <input type="range" id="opacity-slider" min="0" max="100" value="80">
+                            <span id="opacity-value">80%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="font-family">Tipo de letra:</label>
+                        <select id="font-family">
+                            <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI (Predeterminado)</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="font-size">Tamaño de letra:</label>
+                        <div class="slider-container">
+                            <input type="range" id="font-size" min="10" max="24" value="14">
+                            <span id="font-size-value">14px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="color-settings">
+                        <div class="form-group">
+                            <label for="background-color">Color de fondo:</label>
+                            <input type="color" id="background-color" value="#121212">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="text-color">Color de texto:</label>
+                            <input type="color" id="text-color" value="#ffffff">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="username-color">Color de nombres de usuario:</label>
+                            <input type="color" id="username-color" value="#00ff00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="show-badges" checked>
+                            Mostrar insignias (moderador, suscriptor, etc.)
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="show-timestamps">
+                            Mostrar marcas de tiempo
+                        </label>
+                    </div>
+                    
+                    <div class="preview-container">
+                        <h3>Vista previa</h3>
+                        <div id="chat-preview">
+                            <div class="preview-message">
+                                <div class="preview-header">
+                                    <span class="preview-username">Moderador123</span>
+                                    <span class="preview-badge">Mod</span>
+                                </div>
+                                <div class="preview-content">¡Bienvenidos al stream de hoy!</div>
+                            </div>
+                            <div class="preview-message">
+                                <div class="preview-header">
+                                    <span class="preview-username">Usuario456</span>
+                                    <span class="preview-badge">Sub</span>
+                                </div>
+                                <div class="preview-content">Hola a todos! 😀</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pestaña de Comportamiento -->
+                <div class="tab-pane" id="behavior-tab">
+                    <div class="form-group">
+                        <label for="max-messages">Número máximo de mensajes:</label>
+                        <input type="number" id="max-messages" value="100" min="10" max="500">
+                        <p class="help-text">Limitar el número de mensajes mejora el rendimiento</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="always-on-top" checked>
+                            Mantener siempre visible (por encima de otras ventanas)
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="animate-messages" checked>
+                            Animar nuevos mensajes
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="auto-scroll" checked>
+                            Desplazamiento automático a nuevos mensajes
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="minimize-to-tray">
+                            Minimizar a la bandeja del sistema al cerrar
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="start-with-system">
+                            Iniciar con el sistema
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Pestaña de Acerca de -->
+                <div class="tab-pane" id="about-tab">
+                    <div class="about-content">
+                        <h2>Kick Chat Overlay</h2>
+                        <p>Versión 1.0.0</p>
+                        <p>Un overlay para mostrar el chat de Kick.com por encima de cualquier aplicación.</p>
+                        
+                        <h3>Características</h3>
+                        <ul>
+                            <li>Ventana transparente y redimensionable</li>
+                            <li>Personalización completa de apariencia</li>
+                            <li>Soporte para insignias y emotes</li>
+                            <li>Múltiples idiomas</li>
+                        </ul>
+                        
+                        <h3>Documentación de la API</h3>
+                        <p>Este software utiliza la API pública de Kick.com:</p>
+                        <a href="https://docs.kick.com/apis/chat" target="_blank">https://docs.kick.com/apis/chat</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="config-footer">
+                <button id="save-button" class="primary-button">Guardar cambios</button>
+                <button id="cancel-button" class="secondary-button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+</body>
+</html>
