@@ -14,7 +14,7 @@ Asegúrate de tener instalado:
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/yourusername/kick-chat-overlay.git
+git clone https://github.com/JuanEntrena18/kick-chat-overlay.git
 cd kick-chat-overlay
 ```
 
